@@ -7,11 +7,15 @@ const emojiDetails = [
   // Add more emoji descriptions here
 ];
 let currentEmojiIndex = 0;
-let score = 00;
+let score = 0;
 
 const guessInput = document.getElementById("guess-input");
 const resultElement = document.getElementById("result");
 const scoreElement = document.getElementById("score");
+const timerElement = document.getElementById("timer");
+const buttonElement = document.getElementById("restart-button");
+
+let seconds = 30;
 
 function displayEmoji() {
   const descriptionElement = document.getElementById("description");
@@ -38,7 +42,9 @@ function checkguess() {
 
 function nextEmoji() {
   currentEmojiIndex++;
-
+  setTimeout(() => {
+    resultElement.textContent = "";
+  }, 500);
   if (currentEmojiIndex == emojiDetails.length) {
     currentEmojiIndex = 0;
   }
@@ -52,5 +58,46 @@ document.getElementById("guess-input").addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  displayEmoji();
+  timerElement.textContent = `Time :${seconds}s`;
+  startTimer();
+});
+let timer;
+function startTimer() {
+  timer = setInterval(() => {
+    seconds--;
+    timerElement.textContent = `Time : ${seconds}s`;
+    if (seconds == 20) {
+      endGame();
+    }
+  }, 1000);
+}
+
+function endGame() {
+  clearInterval(timer);
+  guessInput.disabled = true;
+  timerElement.textContent = "Time's up!Restart to play again";
+}
+
+//to restart
+
+buttonElement.addEventListener("click", () => {
+  score = 0;
+  currentEmojiIndex = 0;
+
+  // Clear the result
+  resultElement.textContent = "";
+
+  // Enable the guess input
+  guessInput.disabled = false;
+
+  // Reset the timer
+  seconds = 30;
+  timerElement.textContent = `Time : ${seconds}s`;
+
+  // Restart the timer
+  clearInterval(timer);
+  startTimer();
+
   displayEmoji();
 });

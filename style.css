@@ -23,6 +23,7 @@ body{
 #score {
     font-size: 18px;
     color: #333;
+    padding-bottom: 30px;
  }
 #description {
     font-size: 70px;
