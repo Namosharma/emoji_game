@@ -7,7 +7,7 @@ const emojiDetails = [
   // Add more emoji descriptions here
 ];
 let currentEmojiIndex = 0;
-let score = 0;
+let score = 00;
 
 const guessInput = document.getElementById("guess-input");
 const resultElement = document.getElementById("result");
